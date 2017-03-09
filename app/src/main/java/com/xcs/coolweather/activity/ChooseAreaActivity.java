@@ -63,13 +63,14 @@ public class ChooseAreaActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (mCurrentLevel == LEVEL_PROVINCE){
                     mSelectedProvince = mProvinceList.get(position);
-
+                    queryCities();
                 }else if (mCurrentLevel == LEVEL_CITY){
                     mSelectCity = mCityList.get(position);
-
+                    queryCounties();
                 }
             }
         });
+        queryProvinces();
     }
 
     private void queryProvinces(){
