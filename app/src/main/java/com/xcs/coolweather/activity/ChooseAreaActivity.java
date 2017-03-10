@@ -51,14 +51,17 @@ public class ChooseAreaActivity extends Activity {
     private City mSelectCity;
     private int mCurrentLevel;
 
+    boolean mIsFromWeatherActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mIsFromWeatherActivity = getIntent().getBooleanExtra("from_weather_activity",false);
         setContentView(R.layout.choose_area);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (prefs.getBoolean("city_selected",false)){
+        if (prefs.getBoolean("city_selected",false) && !mIsFromWeatherActivity){
             Intent intent = new Intent(this,WeatherActivity.class);
             startActivity(intent);
             finish();
@@ -213,6 +216,10 @@ public class ChooseAreaActivity extends Activity {
         }else if (mCurrentLevel == LEVEL_CITY){
             queryProvinces();
         }else{
+            if (mIsFromWeatherActivity){
+                Intent intent = new Intent(this,WeatherActivity.class);
+                startActivity(intent);
+            }
             finish();
         }
     }
